@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+    
+    <title>ADMIN</title>
+  </head>
+  <body>
+
+    <!-- Nav menu-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <a class="navbar-brand" href="#">SHOE SHOP - ADMIN DASHBOARD</a>
+
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/home">Main website</a>
+                </li>
+            </ul>
+            
+          </div>
+        </div>
+      </nav>
+    
+
+    <!-- Tabbed content-->
+    <div class="container py-3">
+      
+      <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Key figures</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">View products</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Edit products</button>
+        </li>
+      </ul>
+      <div class="tab-content" id="pills-tabContent">
+
+        <!-- Key figures -->
+        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+
+            <div class="container">
+              <div class="row">
+                
+                <div class="col">
+                  <div class="card" style="width: 18rem;">
+                    <div class="card-header">
+                      Weekly sales
+                    </div>
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">Total</li>
+                      <li class="list-group-item">+100% last week</li>
+                      <li class="list-group-item">10k over target</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div class="col">
+                  <div class="card" style="width: 18rem;">
+                    <div class="card-header">
+                      Yearly sales
+                    </div>
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">Total</li>
+                      <li class="list-group-item">+100% last year</li>
+                      <li class="list-group-item">10k over target</li>
+                    </ul>
+                  </div>
+                </div>
+        
+                <div class="col">
+                  <div class="card" style="width: 18rem;">
+                    <div class="card-header">
+                      Website
+                    </div>
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">Total pageviews</li>
+                      <li class="list-group-item">+100% last week</li>
+                      <li class="list-group-item">Uncompleted orders</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+        </div>
+
+        <!-- View products -->
+        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+              <div class="container">
+                <table class="table table-striped">
+                  <thead class="table-dark">
+                      <th>Product ID</th>
+                      <th>Name</th>
+                      <th>Price</th>
+                      <th>Brand</th>
+                      <th>Alert</th>
+                      <th>Sale price</th>
+                  </thead>
+            
+                  {% for row in rows %}
+                  <tr>
+                      <td>{{row[0]}}</td>
+                      <td>{{row[1]}}</td>
+                      <td>£{{row[3]}}</td>
+                      <td>{{row[4]}}</td>
+                      <td>{{row[5]}}</td>
+                      <td>{{row[6]}}</td>
+                  </tr>
+                  {% endfor %}
+                </table>
+              </div>
+            </div>
+            
+            <!-- Edit products -->
+            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+
+              
+              <form action="/admin" method="POST" class="py-3">
+
+                <h3>Add new product</h3>
+
+                <div class="row py-1">
+                  <div class="col">
+                    <label class="form-label">Product name</label>
+                    <input type="text" class="form-control" name="productname">
+                  </div>
+
+                  <div class="col">
+                    <label class="form-label">Product ID</label>
+                    <input type="number" class="form-control" placeholder="4 digit code" name="productid">
+                  </div>
+                </div>
+
+                <div class="row py-1">
+                  <div class="col">
+                    <label class="form-label">Brand</label>
+                    <select class="form-select" name="brand">
+                      <option selected>Select</option>
+                      <option value="Nike">Nike</option>
+                      <option value="adidas">adidas</option>
+                      <option value="Vans">Vans</option>
+                      <option value="Converse">Converse</option>
+                    </select>
+                  </div>
+                  <div class="col">
+                    <label class="form-label">Image path</label>
+                    <div class="input-group mb-3">
+                      <span class="input-group-text" id="basic-addon3">product_images/</span>
+                      <input type="text" class="form-control" id="image-path" name="imagepath">
+                    </div>
+                  </div>
+                </div>
+
+                  <div class="row py-1">
+                    <div class="col">
+                      <label class="form-label">Normal price</label>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon3">£</span>
+                        <input type="number" class="form-control" id="normal-price" name="normalprice">
+                      </div>
+                    </div>
+
+                    <div class="col">
+                      <label class="form-label">Sale price</label>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon3">£</span>
+                        <input type="number" class="form-control" id="sale-price" name="saleprice">
+                      </div>
+                    </div>
+
+                    <div class="col">
+                      <label class="form-label">Alert</label>
+                      <select class="form-select" name="alert">
+                        <option selected>None</option>
+                        <option value="Low stock">Low stock</option>
+                        <option value="Sale">Sale</option>
+                      </select>
+                    </div>
+
+                  </div>
+                  
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+                
+                
+                
+                <!-- Edit existing product -->
+                <form action="/admin" method="POST" class="py-5">
+
+                  <h3>Edit existing product</h3>
+                  
+                  <div class="row py-1">
+                    <div class="col">
+                      <label class="form-label">Product ID</label>
+                      <input type="number" class="form-control" placeholder="Find product to edit" name="productid">
+                    </div>
+
+                    <div class="col">
+                      <label class="form-label">Image path</label>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon3">product_images/</span>
+                        <input type="text" class="form-control" id="image-path" name="imagepath">
+                      </div>
+                    </div>
+                  </div>
+    
+                  <div class="row py-1">
+                    <div class="col">
+                      <label class="form-label">Normal price</label>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon3">£</span>
+                        <input type="number" class="form-control" id="normal-price" name="normalprice">
+                      </div>
+                    </div>
+  
+                    <div class="col">
+                      <label class="form-label">Sale price</label>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon3">£</span>
+                        <input type="number" class="form-control" id="sale-price" name="saleprice">
+                      </div>
+                    </div>
+  
+                    <div class="col">
+                      <label class="form-label">Alert</label>
+                      <select class="form-select" name="alert">
+                        <option selected>None</option>
+                        <option value="Low stock">Low stock</option>
+                        <option value="Sale">Sale</option>
+                      </select>
+                    </div>
+                  </div>
+    
+                    
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                </form>
+            </div>
+
+
+            </div>
+
+      
+      </div>
+    </div>
+
+  
+
+  </body>
+</html>

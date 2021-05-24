@@ -1,28 +1,117 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trainers - home</title>
-</head>
-<body>
-    <h1>Home</h1>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <table>
-        <tr>
-            <th>Product ID</th>
-            <th>Name</th>
-            <th>Image path</th>
-            <th>Price</th>
-        </tr>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 
-        {% for row in rows %}
-        <tr>
-            <td>{{row[0]}}</td>
-            <td>{{row[1]}}</td>
-            <td>{{row[2]}}</td>
-            <td>£{{row[3]}}</td>
-        </td>
-        {% endfor %}
-</body>
+    <!-- Bootstrap icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+    <script src="static\scripts.js"></script>
+
+    <title>HOME</title>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-expand-lg py-3 navbar-dark bg-dark">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <a class="navbar-brand" href="/home">
+                    <img src="\static\logo.svg" alt="" width="60px" height="48px">
+                </a>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <a class="navbar-brand" href="/home">SHOE SHOP</a>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/all">All</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/nike">Nike</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/adidas">adidas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/vans">Vans</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/converse">Converse</a>
+                    </li>
+ 
+                </ul>
+                
+
+                <form class="d-flex" action="/search" method="POST">
+                    <input class="form-control me-2" type="search" placeholder="Search" name="search">
+                    <button class="btn btn-outline-primary" type="submit">Search</button>
+                </form>
+          </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid py-2">
+        <div class="dropdown">
+            <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" "">
+              Sort by
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li><a class="dropdown-item" onclick="sortlow()" >Price: lowest first</a></li>
+              <li><a class="dropdown-item" onclick="sorthigh()" >Price: highest first</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container py-3">
+        <div class="row">
+
+            {% for row in rows %}
+            <div class="col py-2">
+
+                <div class="card" style="width: 18rem;">
+
+                    <img src="..\..\static\product_images\{{row[2]}}.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{row[1]}}</h5> 
+                        <p class="card-text">{{row[4]}} <br>Product ID: {{row[0]}}</p>
+
+                        <a href="#" class="btn btn-primary">
+                            {% if row[5] == 'Sale' -%}
+                                <del>£{{row[3]}}</del> £{{row[6]}}
+                            {% else %}
+                                £{{row[3]}}
+                            {%- endif %}
+                        </a>
+
+                        {% if row[5] == 'Sale' -%}
+                            <span class="badge bg-danger text-light">Sale!</span> 
+                        {%- endif %}
+                        {% if row[5] == 'Low stock' -%}
+                            <span class="badge bg-warning text-dark"> {{row[5]}} </span> 
+                        {%- endif %}
+                    </div>
+
+                </div>  
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+    
+
+
+  </body>
 </html>

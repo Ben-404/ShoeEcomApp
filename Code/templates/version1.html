@@ -1,0 +1,21 @@
+<table>
+    <thead>
+        <th>Product ID</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Brand</th>
+        <th>Alert</th>
+        <th>Sale price</th>
+    </thead>
+
+    {% for row in rows %}
+    <tr>
+        <td>{{row[0]}}</td>
+        <td>{{row[1]}}</td>
+        <td>£{{row[3]}}</td>
+        <td>{{row[4]}}</td>
+        <td>{{row[5]}}</td>
+        <td>{{row[6]}}</td>
+    </tr>
+    {% endfor %}
+</table>
