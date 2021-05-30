@@ -27,6 +27,7 @@ def get_products_brand(brand):
     # Retrieve all the products returned by the database
     products = cursor.fetchall()
 
+
     # Close the connection
     con.close()
 
@@ -84,6 +85,35 @@ def search_products(searchquery):
 
     return products
 
+def edit_product(formdata):
+    # Initialise string to hold data for the query
+    querydata = []
+
+    # Loop through formdata
+    for i in formdata:
+        if formdata[i] != '':
+            # If value isn't empty, append the data to the list
+            querydata.append(str(i + " = '" + formdata[i] + "'"))
+
+    # Preparing SQL queries to UPDATE an existing record in the database
+    for i in range(1, len(querydata)):
+        sqlstatement = "UPDATE productdata SET " + querydata[i] + " WHERE " + querydata[0] + ";"
+        print(sqlstatement)
+
+    #Connect to sqlite
+    conn = sqlite3.connect('static\products.db')
+
+    #Create a cursor object using the cursor() method
+    cursor = conn.cursor()
+
+    cursor.execute(sqlstatement)
+
+    # Commit the changes to database
+    conn.commit()
+
+    # Close connection
+    conn.close()
+    
 
 
 @app.route('/home', methods =['GET', 'POST'])
@@ -162,6 +192,10 @@ def sort(page, sorttype):
     # return website and data files
     return render_template('index.html', rows=products)
 
+@app.route('/basket', methods =['GET'])
+def basket():
+    # return website and data files
+    return render_template('basket.html')
 
 @app.route('/admin', methods =['GET', 'POST'])
 def admin():
@@ -169,12 +203,18 @@ def admin():
     products = get_products_brand('all')
 
     if request.method == "POST":
+        # Save submitted form data into variable
         formdata = request.form
 
-        new_product(formdata)
-
+        # If the forms submit button is named 'addnew'
+        if 'addnew' in formdata:
+            new_product(formdata)
+        # Elif the forms submit button is named 'editexisting'
+        elif 'editexisting' in formdata:
+            print(formdata)
+            # Run the edit_product function and save output to a variable
+            edit_product(formdata)
         return redirect(request.url)
-
 
     # return website and data files
     return render_template('admin.html', rows=products)

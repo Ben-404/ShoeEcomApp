@@ -16,7 +16,7 @@
 
     <script src="static\scripts.js"></script>
 
-    <title>HOME</title>
+    <title>BASKET</title>
   </head>
   <body>
 
@@ -53,8 +53,6 @@
  
                 </ul>
 
-                <button class="btn btn-outline-light mx-4" onclick="document.location='/basket'">My basket</button>
-
                 <form class="d-flex" action="/search" method="POST">
                     <input class="form-control me-2" type="search" placeholder="Search" name="search">
                     <button class="btn btn-outline-primary" type="submit">Search</button>
@@ -63,18 +61,7 @@
         </div>
     </nav>
 
-    <div class="container-fluid py-2">
-        <div class="dropdown">
-            <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" "">
-              Sort by
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <li><a class="dropdown-item" onclick="sortlow()" >Price: lowest first</a></li>
-              <li><a class="dropdown-item" onclick="sorthigh()" >Price: highest first</a></li>
-            </ul>
-        </div>
-    </div>
-
+  
     <div class="container py-3">
         <div class="row">
 
