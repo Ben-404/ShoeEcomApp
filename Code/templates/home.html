@@ -16,7 +16,7 @@
 
     <script src="static\scripts.js"></script>
 
-    <title>BASKET</title>
+    <title>HOME</title>
   </head>
   <body>
 
@@ -33,7 +33,7 @@
                     <a class="navbar-brand" href="/home">SHOE SHOP</a>
 
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/home">Home</a>
+                        <a class="nav-link active" aria-current="page" href="/home">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/all">All</a>
@@ -53,94 +53,64 @@
  
                 </ul>
 
-                <button class="btn btn-light mx-4" onclick="document.location='/basket'">My basket</button>
-
+                <button class="btn btn-outline-light mx-4" onclick="document.location='/basket'">My basket</button>
+                
                 <form class="d-flex" action="/search" method="POST">
-                  <input class="form-control me-2" type="search" placeholder="Search" name="search">
-                  <button class="btn btn-outline-primary" type="submit">Search</button>
+                    <input class="form-control me-2" type="search" placeholder="Search" name="search">
+                    <button class="btn btn-outline-primary" type="submit">Search</button>
                 </form>
           </div>
         </div>
     </nav>
-    
-    
+
     <div class="container py-3">
+
+      {% if saleon == "true" -%}
+      <img src="{{saleimage}}" class="img-fluid">
+      {%- endif %}
+
+      <h4>Products we love</h4>
       <div class="row">
-        {% for product in products %}
-        <div class="card border-white mb-3" style="max-width: 1000px;">
-          <div class="row g-0">
-            <div class="col-3 d-flex align-items-center">
-              <img src="..\..\static\product_images\{{product[2]}}.jpg" class="img-fluid">
-                    </div>
-                    <div class="col-5">
-                      <div class="card-body">
-                        <h5 class="card-title">{{product[1]}}</h5>
-                        <p class="card-text">{{product[4]}} <br>Product ID: {{product[0]}}</p>
-                        
-                        <h5>
-                          {% if product[5] == 'Sale' -%}
-                          <del>£{{product[3]}}</del> £{{product[6]}}
-                          {% else %}
-                          £{{product[3]}}
-                          {%- endif %}
-                        </h5>
-                        
-                        <form action="/button" method="POST" class="py-1"></form>
-                          <button type="submit" class="btn btn-danger" name="{{ product[0] }}">Remove</button>
-                        </form>
-                       
+        
+          {% for product in products %}
+          <div class="col py-2">
 
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {% endfor %}
-              </div>
-              
-              {% if total == 0 -%}
-                <div class="alert alert-warning" role="alert">
-                  You haven't added anything to your basket yet!
-                </div>
-              {%- endif %}
+              <div class="card" style="width: 18rem;">
+                
+                <img src="..\..\static\product_images\{{product[2]}}.jpg" class="card-img-top">
 
-              <hr class="bg-dark border-2 border-top border-dark">
-              
-              <h4>Subtotal: £{{ total }}</h4>
-              
-              <h4>Delivery:
-                {% if total > 100 -%}
-                  £0
-                {% else %}
-                  £2.99
-                {%- endif %}
-              </h4>
-              
-              <hr class="bg-dark border-2 border-top border-dark">
-              
-              <h4><strong>Total: 
-                {% if total > 100 -%}
-                  £{{total}}
-                {% else %}
-                  £{{total + 2.99}}
-                {%- endif %}
-              </strong></h4>
-              
-              
-            </div>
-            
-            
-            <section class="">
-              <!-- Footer -->
-              <footer class="bg-dark text-white">
-                <!-- Grid container -->
-                <div class="container p-4">
-                  <!--Grid product-->
-                  <div class="row">
-                    <!--Grid column-->
-                    <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
-                      <h5 class="text-uppercase">SHOE SHOP</h5>
-                      
-                      <p>
+                <div class="card-body">
+                  <h5 class="card-title">{{product[1]}}</h5> 
+                  <p class="card-text">{{product[4]}} <br>Product ID: {{product[0]}}</p>
+                  
+                  <a class="btn btn-primary" onclick="add_basket({{product[0]}})">
+                    {% if product[5] == 'Sale' -%}
+                    <del>£{{product[3]}}</del> £{{product[6]}}
+                    {% else %}
+                    £{{product[3]}}
+                    {%- endif %}
+                  </a>
+                </div>
+  
+              </div>  
+          </div>
+          {% endfor %}
+
+      </div>
+  </div>
+    
+    <section class="">
+        <!-- Footer -->
+        <footer class="bg-dark text-white">
+          <!-- Grid container -->
+          <div class="container p-4">
+            <!--Grid row-->
+            <div class="row">
+              <!--Grid column-->
+              <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                <h5 class="text-uppercase">SHOE SHOP</h5>
+      
+                <p>
                   AWAITING CONTENT...
                 </p>
               </div>

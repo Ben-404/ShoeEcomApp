@@ -208,8 +208,12 @@ def load_basket_products(cookies):
         product_id_list.append(productid)
     print(product_id_list)
 
+    # If no items in basket, return empty list and total=0
+    if not product_id_list:
+        return [], 0
+
     # Generate an SQL statement to get products by their ID
-    sqlstatement = "SELECT * FROM productdata WHERE productid LIKE '" + product_id_list[1] + "'"
+    sqlstatement = "SELECT * FROM productdata WHERE productid LIKE '" + product_id_list[0] + "'"
 
     # For each additional product ID, append an extra condition on the SQL statement
     for i in range(1, len(product_id_list)):
@@ -218,7 +222,21 @@ def load_basket_products(cookies):
     # Finish off the statement
     sqlstatement += ";"
 
-    call_database
+    products = call_database(sqlstatement)
+
+    # Loop to work out total price
+    total = 0
+    for product in products:
+        # If product is on sale, use sale price
+        if product[5] == 'Sale':
+            total += product[6]
+        # If not on sale, use normal price
+        else:
+            total += product[3]
+        
+    print(products)
+    print(total)
+    return products, total
 
 
 @app.route('/home', methods =['GET', 'POST'])
@@ -303,10 +321,10 @@ def basket():
     cookies = request.cookies
 
     # Pass all cookies into function to retrieve products from database
-    load_basket_products(cookies)
+    products, total = load_basket_products(cookies)
 
     # return website and data files
-    return render_template('basket.html')
+    return render_template('basket.html', products=products, total=total)
 
 # When product is added to basket
 @app.route('/basket/<productid>', methods=['POST'])

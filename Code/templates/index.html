@@ -19,53 +19,54 @@
     <title>HOME</title>
   </head>
   <body>
-
+    
     <nav class="navbar navbar-expand-lg py-3 navbar-dark bg-dark">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <a class="navbar-brand" href="/home">
-                    <img src="\static\logo.svg" alt="" width="60px" height="48px">
-                </a>
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <a class="navbar-brand" href="/home">SHOE SHOP</a>
-
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/home">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/all">All</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/nike">Nike</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/adidas">adidas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/vans">Vans</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/converse">Converse</a>
-                    </li>
- 
-                </ul>
-
-                <button class="btn btn-outline-light mx-4" onclick="document.location='/basket'">My basket</button>
-
-                <form class="d-flex" action="/search" method="POST">
-                    <input class="form-control me-2" type="search" placeholder="Search" name="search">
-                    <button class="btn btn-outline-primary" type="submit">Search</button>
-                </form>
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <a class="navbar-brand" href="/home">
+            <img src="\static\logo.svg" alt="" width="60px" height="48px">
+          </a>
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <a class="navbar-brand" href="/home">Home</a>
+            
+            <li class="nav-item">
+              <a class="nav-link" href="/home">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/all">All</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/nike">Nike</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/adidas">adidas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/vans">Vans</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/converse">Converse</a>
+            </li>
+                    
+          </ul>
+                  
+            <button class="btn btn-outline-light mx-4" onclick="document.location='/basket'">My basket</button>
+            
+            <form class="d-flex" action="/search" method="POST">
+              <input class="form-control me-2" type="search" placeholder="Search" name="search">
+              <button class="btn btn-outline-primary" type="submit">Search</button>
+            </form>
           </div>
         </div>
     </nav>
 
+    
     <div class="container-fluid py-2">
-        <div class="dropdown">
-            <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" "">
+      <div class="dropdown">
+        <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" "">
               Sort by
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -73,72 +74,72 @@
               <li><a class="dropdown-item" onclick="sorthigh()" >Price: highest first</a></li>
             </ul>
         </div>
-    </div>
-
-    <div class="container py-3">
+      </div>
+      
+      <div class="container py-3">
         <div class="row">
-
-            {% for row in rows %}
-            <div class="col py-2">
-
+          
+          {% for row in rows %}
+          <div class="col py-2">
+            
                 <div class="card" style="width: 18rem;">
-
-                    <img src="..\..\static\product_images\{{row[2]}}.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">{{row[1]}}</h5> 
-                        <p class="card-text">{{row[4]}} <br>Product ID: {{row[0]}}</p>
-
-                        <a href="#" class="btn btn-primary">
-                            {% if row[5] == 'Sale' -%}
-                                <del>£{{row[3]}}</del> £{{row[6]}}
-                            {% else %}
-                                £{{row[3]}}
-                            {%- endif %}
-                        </a>
-
-                        {% if row[5] == 'Sale' -%}
-                            <span class="badge bg-danger text-light">Sale!</span> 
-                        {%- endif %}
-                        {% if row[5] == 'Low stock' -%}
-                            <span class="badge bg-warning text-dark"> {{row[5]}} </span> 
-                        {%- endif %}
-                    </div>
-
+                  
+                  <img src="..\..\static\product_images\{{row[2]}}.jpg" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">{{row[1]}}</h5> 
+                    <p class="card-text">{{row[4]}} <br>Product ID: {{row[0]}}</p>
+                    
+                    <a class="btn btn-primary" onclick="add_basket({{ row[0] }})">
+                      {% if row[5] == 'Sale' -%}
+                      <del>£{{row[3]}}</del> £{{row[6]}}
+                      {% else %}
+                      £{{row[3]}}
+                      {%- endif %}
+                    </a>
+                          
+                    {% if row[5] == 'Sale' -%}
+                      <span class="badge bg-danger text-light">Sale!</span> 
+                    {%- endif %}
+                    {% if row[5] == 'Low stock' -%}
+                      <span class="badge bg-warning text-dark"> {{row[5]}} </span> 
+                    {%- endif %}
+                  </div>
+                        
                 </div>  
-            </div>
-            {% endfor %}
-
-        </div>
-    </div>
-
-    
-    <section class="">
-        <!-- Footer -->
-        <footer class="bg-dark text-white">
-          <!-- Grid container -->
-          <div class="container p-4">
-            <!--Grid row-->
-            <div class="row">
-              <!--Grid column-->
-              <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
-                <h5 class="text-uppercase">SHOE SHOP</h5>
-      
-                <p>
-                  AWAITING CONTENT...
-                </p>
               </div>
-              <!--Grid column-->
-      
-              <!--Grid column-->
-              <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                <h5 class="text-uppercase">Brands</h5>
-      
-                <ul class="list-unstyled mb-0">
-                  <li>
-                    <a href="/nike" class="text-white">Nike</a>
-                  </li>
-                  <li>
-                    <a href="/adidas" class="text-white">adidas</a>
+            {% endfor %}
+            
+          </div>
+        </div>
+        
+        
+        <section class="">
+          <!-- Footer -->
+          <footer class="bg-dark text-white">
+            <!-- Grid container -->
+            <div class="container p-4">
+              <!--Grid row-->
+              <div class="row">
+                <!--Grid column-->
+                <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                  <h5 class="text-uppercase">SHOE SHOP</h5>
+                  
+                  <p>
+                    AWAITING CONTENT...
+                  </p>
+                </div>
+                <!--Grid column-->
+                
+                <!--Grid column-->
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                  <h5 class="text-uppercase">Brands</h5>
+                  
+                  <ul class="list-unstyled mb-0">
+                    <li>
+                      <a href="/nike" class="text-white">Nike</a>
+                    </li>
+                    <li>
+                      <a href="/adidas" class="text-white">adidas</a>
                   </li>
                   <li>
                     <a href="/vans" class="text-white">Vans</a>
@@ -149,11 +150,11 @@
                 </ul>
               </div>
               <!--Grid column-->
-      
+              
               <!--Grid column-->
               <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
                 <h5 class="text-uppercase mb-0">About</h5>
-      
+                
                 <ul class="list-unstyled">
                   <li>
                     <a class="text-white">Delivery info</a>
@@ -174,7 +175,7 @@
             <!--Grid row-->
           </div>
           <!-- Grid container -->
-      
+          
           <!-- Copyright -->
           <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
             © 2020 Copyright:
@@ -184,7 +185,7 @@
         </footer>
         <!-- Footer -->
       </section>
-
-
-  </body>
-</html>
+      
+      
+    </body>
+    </html>
