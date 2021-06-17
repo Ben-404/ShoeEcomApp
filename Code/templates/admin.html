@@ -14,7 +14,12 @@
     <!-- Bootstrap icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
-    
+    <!-- Chartist -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+    <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+
+    </script>
+
     <title>ADMIN</title>
   </head>
   <body>
@@ -37,15 +42,18 @@
             
           </div>
         </div>
-      </nav>
+    </nav>
     
-
+    
     <!-- Tabbed content-->
     <div class="container py-3">
       
       <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
         <li class="nav-item" role="presentation">
-          <button class="nav-link active" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab">Edit products</button>
+          <button class="nav-link active" id="pills-statistics-tab" data-bs-toggle="pill" data-bs-target="#pills-statistics" type="button" role="tab">Insights</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab">Edit products</button>
         </li>
         <li class="nav-item" role="presentation">
           <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab">View products</button>
@@ -54,11 +62,114 @@
           <button class="nav-link" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab">Edit homepage</button>
         </li>
       </ul>
-
+      
       <div class="tab-content" id="pills-tabContent">
+        
+        <!-- Statistics -->
+        <div class="tab-pane fade show active" id="pills-statistics" role="tabpanel">
+          <h3>Purchase completion (overall)</h3>
+
           
+          <div class="container">
+            <div class="row h-auto">
+              <div class="col">
+                <div class="ct-chart ct-square container" id="chart2" style="width: 60%;" ></div>
+              </div>
+              <div class="col">
+                <div class="ct-chart ct-square container" id="chart1" style="width: 60%;"></div>
+              </div>
+            </div>
+          </div>
+          
+          <script>
+            // Simple pie chart example with four series
+            new Chartist.Pie('#chart1', {
+              series: [{{basketcount}}, {{salecount}}]
+            });
+          </script>
+
+          <script>
+            // Bar chart for purchase completion
+            var data = {
+            labels: ['Add to basket', 'Sale count'],
+            series: [
+                [{{basketcount}}, {{salecount}}]
+              ]
+            };
+                    
+            new Chartist.Bar('#chart2', data);
+          </script>
+
+          <h5>Completion rate: {{ ((basketcount/salecount)*100)|round }}% </h5>
+
+
+
+          <hr class="bg-dark border-2 border-top border-dark">
+
+
+
+          <h3>Purchase completion by brand (%)</h3>
+
+          <div class="container" >
+            <div class="row">
+              <div class="col">
+                <div class="ct-chart ct-square container" id="brand1" style="height: 30%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <script type="text/javascript">
+            var pc_brand = {{ pc_brand }};
+          </script>
+
+          <script src="static\chartscript.js"></script>
+
+
+          <hr class="bg-dark border-2 border-top border-dark">
+
+
+          
+          <div class="container">
+            <div class="row h-auto">
+              <div class="col">
+                <div class="ct-chart ct-square container" id="chart2" style="width: 60%;"></div>
+              </div>
+              <div class="col">
+                <div class="ct-chart ct-square container" id="chart1" style="width: 60%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <script>
+            // Simple pie chart example with four series
+            new Chartist.Pie('#chart1', {
+              series: [{{basketcount}}, {{salecount}}]
+            });
+          </script>
+
+          <script>
+            // Bar chart for purchase completion
+            var data = {
+            labels: ['Add to basket', 'Sale count'],
+            series: [
+                [{{basketcount}}, {{salecount}}]
+              ]
+            };
+                    
+            new Chartist.Bar('#chart2', data);
+          </script>
+
+          <h5>Completion rate: {{ ((basketcount/salecount)*100)|round }}% </h5>
+
+
+
+          <hr class="bg-dark border-2 border-top border-dark">
+
+        </div>
+        
+
         <!-- Edit products -->
-        <div class="tab-pane fade show active" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+        <div class="tab-pane fade" id="pills-contact" role="tabpanel">
           <form action="/admin" method="POST" class="py-3" name="addnew">
 
             <h3>Add new product</h3>
@@ -125,6 +236,7 @@
               <button type="submit" class="btn btn-primary" name="addnew">Submit</button>
           </form>
             
+          <hr class="bg-dark border-2 border-top border-dark">
             
             
             <!-- Edit existing product -->
@@ -178,7 +290,7 @@
         </div>
 
         <!-- View products -->
-        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+        <div class="tab-pane fade" id="pills-profile" role="tabpanel">
           <div class="container">
                 <table class="table table-striped">
                   <thead class="table-dark">
@@ -205,7 +317,7 @@
         </div>
 
         <!-- Edit homepage -->
-        <div class="tab-pane fade" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+        <div class="tab-pane fade" id="pills-home" role="tabpanel">
 
             <div class="container">
               <div class="row">
@@ -254,9 +366,6 @@
 
         </div>
 
-        </div>
-
-      
       </div>
     </div>
 

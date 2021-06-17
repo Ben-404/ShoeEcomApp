@@ -31,6 +31,25 @@ def call_database(sqlstatement):
 
     return database_response
 
+def update_database(column, productid, value):
+    #Connect to sqlite
+    conn = sqlite3.connect('static\products.db')
+
+    #Create a cursor object using the cursor() method
+    cursor = conn.cursor()
+
+    # Format SQL statement
+    sqlstatement = "UPDATE productdata SET "+ column +" = "+ column +" + "+ str(value) +" WHERE productid = " + str(productid)
+
+    # Send the SQL statement to the database
+    cursor.execute(sqlstatement)
+    
+    # Commit the changes to database
+    conn.commit()
+
+    # Close connection
+    conn.close()
+
 def get_products_brand(brand):
     # Convert capital letters to lowercase
     brand = brand.lower()
@@ -104,7 +123,6 @@ def search_products(searchquery):
 
     # Close the connection
     con.close()
-    print(products)
 
     return products
 
@@ -121,7 +139,6 @@ def edit_product(formdata):
     # Preparing SQL queries to UPDATE an existing record in the database
     for i in range(1, len(querydata)):
         sqlstatement = "UPDATE productdata SET " + querydata[i] + " WHERE " + querydata[0] + ";"
-        print(sqlstatement)
 
     #Connect to sqlite
     conn = sqlite3.connect('static\products.db')
@@ -158,7 +175,7 @@ def get_home_products():
     sqlstatement = "SELECT * FROM productdata WHERE productid LIKE '" + homedata[0][0] + "'"
 
     # For each additional product ID, append an extra condition on the SQL statement
-    for i in range(1, len(homedata[0])):
+    for i in range(len(homedata[0])):
         sqlstatement += " OR productid LIKE '" + homedata[0][i] + "'"
     
     # Finish off the statement
@@ -173,6 +190,22 @@ def get_home_products():
     # Retrieve all the products returned by the database
     products = cursor.fetchall()
 
+
+
+
+    # Generate an SQL statement to get products by their ID
+    sqlstatement = "SELECT * FROM productdata WHERE alert LIKE 'Sale';"
+
+    # Send the SQL statement to the database
+    cursor.execute(sqlstatement)
+    
+    # Commit the changes to database
+    conn.commit()
+
+    # Retrieve all the products returned by the database
+    saleproducts = cursor.fetchall()
+
+
     # Close connection
     conn.close()
 
@@ -180,7 +213,7 @@ def get_home_products():
     saleon = homedata[1]["saleon"]
     saleimage = homedata[1]["saleimage"]
 
-    return products, saleon, saleimage
+    return products, saleproducts, saleon, saleimage
 
 def save_home_products():
     data = [
@@ -206,7 +239,6 @@ def load_basket_products(cookies):
     # Append the productid of each cookie to a list
     for productid in cookies:
         product_id_list.append(productid)
-    print(product_id_list)
 
     # If no items in basket, return empty list and total=0
     if not product_id_list:
@@ -234,19 +266,18 @@ def load_basket_products(cookies):
         else:
             total += product[3]
         
-    print(products)
-    print(total)
     return products, total
+
 
 
 @app.route('/home', methods =['GET', 'POST'])
 def home():
     save_home_products()
 
-    products, saleon, saleimage = get_home_products()
+    products, saleproducts, saleon, saleimage = get_home_products()
 
     # return website and data files
-    return render_template('home.html', products=products, saleon=saleon, saleimage=saleimage)
+    return render_template('home.html', products=products, saleproducts=saleproducts, saleon=saleon, saleimage=saleimage)
 
 @app.route('/all', methods =['GET', 'POST'])
 def all():
@@ -315,7 +346,7 @@ def sort(page, sorttype):
     # return website and data files
     return render_template('index.html', rows=products)
 
-@app.route('/basket', methods =['GET'])
+@app.route('/basket', methods =['GET', 'POST'])
 def basket():
     # Get all cookies stored in browser
     cookies = request.cookies
@@ -327,7 +358,7 @@ def basket():
     return render_template('basket.html', products=products, total=total)
 
 # When product is added to basket
-@app.route('/basket/<productid>', methods=['POST'])
+@app.route('/basket/<int:productid>', methods=['POST'])
 def add_to_basket(productid):
     # Save the product id and convert to string
     productid = str(productid)
@@ -350,7 +381,51 @@ def add_to_basket(productid):
         resp = make_response(redirect(request.url))
         resp.set_cookie(productid, str(current_quantity))
 
+    update_database('addbasket', productid, 1)
+
     return resp
+
+# When product is removed from basket
+@app.route('/removebasket/<productid>', methods=['GET'])
+def remove_from_basket(productid):
+    # Save the product id and convert to string
+    productid = str(productid)
+
+    resp = make_response(redirect('/basket'))
+    # Create a cookie for current productid and set quantity to 1
+    resp.set_cookie(productid, '0', max_age=0)
+
+    return resp
+
+# Checkout
+@app.route('/checkout', methods =['GET', 'POST'])
+def checkout():
+    # Get all the products added to basket and convert them to dict
+    productdict = request.cookies.to_dict()
+
+    # Begin a list to store product codes for database call
+    productslist = []
+
+    # Loop through each product in basket, updating the sales figures in the database
+    for product in productdict:
+        quantity = productdict.get(product)
+        update_database('salecount', product, quantity)
+        productslist.append(product)
+
+    # Generate an SQL statement to get products by their ID
+    sqlstatement = "SELECT * FROM productdata WHERE productid LIKE '" + productslist[0] + "'"
+
+    # For each additional product ID, append an extra condition on the SQL statement
+    for i in range(1, len(productslist)):
+        sqlstatement += " OR productid LIKE '" + productslist[i] + "'"
+    
+    # Finish off the statement
+    sqlstatement += ";"
+
+    products = call_database(sqlstatement)
+
+    # return website and data files
+    return render_template('checkout.html', products=products)
 
 @app.route('/admin', methods =['GET', 'POST'])
 def admin():
@@ -366,13 +441,25 @@ def admin():
             new_product(formdata)
         # Elif the forms submit button is named 'editexisting'
         elif 'editexisting' in formdata:
-            print(formdata)
             # Run the edit_product function and save output to a variable
             edit_product(formdata)
         return redirect(request.url)
 
+    # Work out statistics for insight tab
+    sqlstatement = 'SELECT SUM(addbasket) FROM productdata;'
+    basketcount = 12 #call_database(sqlstatement)
+    sqlstatement = 'SELECT SUM(salecount) FROM productdata;'
+    salecount = 32 #call_database(sqlstatement)
+
+    brands = ['nike', 'adidas', 'converse', 'vans']
+    purchase_completion_brand = [32, 56, 73, 13]
+
+    for brand in brands:
+        sqlstatement = "SELECT SUM(addbasket)/SUM(salecount) FROM productdata WHERE brand='" + brand +"';"
+        print(sqlstatement)
+
     # return website and data files
-    return render_template('admin.html', rows=products)
+    return render_template('admin.html', rows=products, basketcount=basketcount, salecount=salecount, pc_brand=purchase_completion_brand)
 
 
 

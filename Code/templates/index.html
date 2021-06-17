@@ -91,9 +91,9 @@
                     
                     <a class="btn btn-primary" onclick="add_basket({{ row[0] }})">
                       {% if row[5] == 'Sale' -%}
-                      <del>£{{row[3]}}</del> £{{row[6]}}
+                        <del>£{{row[3]}}</del> £{{row[6]}}
                       {% else %}
-                      £{{row[3]}}
+                        £{{row[3]}}
                       {%- endif %}
                     </a>
                           
