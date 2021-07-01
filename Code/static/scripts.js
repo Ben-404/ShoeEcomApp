@@ -15,5 +15,17 @@ function add_basket(productid){
     )
 }
 
+function preview_banner(){
+    // Selecting the input element and get its value 
+    var text = document.getElementById("home-txt").value;
+    var bg_colour = document.getElementById("bg-colour").value;
+    var txt_colour = document.getElementById("txt-colour").value;
+    var outline_colour = document.getElementById("outline-colour").value;
 
+    // Set the value of preview area to user-defined values
+    document.getElementById("bg").style.backgroundColor = bg_colour;
+    document.getElementById("txt").style.color = txt_colour;
+    document.getElementById("txt").style.backgroundColor = outline_colour;
+    document.getElementById("txt").innerHTML =text;
+}
 

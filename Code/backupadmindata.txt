@@ -1,0 +1,26 @@
+{
+    "key_stats": {
+        "orders": 4,
+        "revenue": 318,
+        "traffic": 0,
+        "satisfaction": 0
+    },
+    "sales_by_brand": {
+        "nike": 6,
+        "adidas": 6,
+        "vans": 2,
+        "converse": 5
+    },
+    "purchase_completion_brand": {
+        "nike": 100.0,
+        "adidas": 0.0,
+        "vans": 100.0,
+        "converse": 100.0
+    },
+    "user_satisfaction": {
+        "very satisfied": 34,
+        "satisfied": 36,
+        "unsatisfied": 20,
+        "very unsatisfied": 10
+    }
+}

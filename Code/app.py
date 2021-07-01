@@ -2,8 +2,9 @@
 from flask import Flask, render_template, request, redirect, make_response
 # Import SQLite, to interact with database
 import sqlite3
-# Import my algorithms file
+# Import my algorithms & statistics files
 import algorithms
+import statistics
 # Import JSON library
 import json
 
@@ -233,6 +234,19 @@ def save_home_products():
     homedatafile.write(json.dumps(data, indent=4))
     homedatafile.close()
 
+def total_price(products):
+    # Loop to work out total price
+    total = 0
+    for product in products:
+        # If product is on sale, use sale price
+        if product[5] == 'Sale':
+            total += product[6]
+        # If not on sale, use normal price
+        else:
+            total += product[3]
+    
+    return total
+
 def load_basket_products(cookies):
     product_id_list = []
 
@@ -256,17 +270,15 @@ def load_basket_products(cookies):
 
     products = call_database(sqlstatement)
 
-    # Loop to work out total price
-    total = 0
-    for product in products:
-        # If product is on sale, use sale price
-        if product[5] == 'Sale':
-            total += product[6]
-        # If not on sale, use normal price
-        else:
-            total += product[3]
+    # Call total price function
+    total = total_price(products)
         
     return products, total
+
+def edithomebanner(formdata):
+    print("function run")
+    bg_colour = formdata["bg-colour"]
+    print(bg_colour)
 
 
 
@@ -424,6 +436,15 @@ def checkout():
 
     products = call_database(sqlstatement)
 
+    # Update stats for orders and revenue
+    statistics.update_stats("key_stats", "orders", 1)
+    statistics.update_stats("key_stats", "revenue", total_price(products))
+    # Update sales stats with product brand
+    for product in products:
+        brand = product[4]
+        statistics.update_stats("sales_by_brand", brand, 1)
+
+
     # return website and data files
     return render_template('checkout.html', products=products)
 
@@ -443,23 +464,17 @@ def admin():
         elif 'editexisting' in formdata:
             # Run the edit_product function and save output to a variable
             edit_product(formdata)
+        elif 'edithomebanner' in formdata:
+            edithomebanner(formdata)
         return redirect(request.url)
 
-    # Work out statistics for insight tab
-    sqlstatement = 'SELECT SUM(addbasket) FROM productdata;'
-    basketcount = 12 #call_database(sqlstatement)
-    sqlstatement = 'SELECT SUM(salecount) FROM productdata;'
-    salecount = 32 #call_database(sqlstatement)
-
-    brands = ['nike', 'adidas', 'converse', 'vans']
-    purchase_completion_brand = [32, 56, 73, 13]
-
-    for brand in brands:
-        sqlstatement = "SELECT SUM(addbasket)/SUM(salecount) FROM productdata WHERE brand='" + brand +"';"
-        print(sqlstatement)
+    admindatafile = open("static/admindata.json", "r")
+    admindata = admindatafile.read()
+    admindata = json.loads(admindata)
+    admindatafile.close()
 
     # return website and data files
-    return render_template('admin.html', rows=products, basketcount=basketcount, salecount=salecount, pc_brand=purchase_completion_brand)
+    return render_template('admin.html', rows=products, admindata=admindata)
 
 
 

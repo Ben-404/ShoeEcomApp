@@ -1,8 +1,24 @@
-var data = {
-    labels: ['Nike', 'adidas', 'Converse', 'Vans'],
-    series: [pc_brand[0], pc_brand[1], pc_brand[2], pc_brand[3]]
-};
+var script_tag = document.getElementById('import');
+var admindata = script_tag.getAttribute("data");
 
-alert(data["series"])
+console.log(admindata);
 
-new Chartist.Bar('#brand1', data);
+var ctx = document.getElementById('salesByBrandBar').getContext('2d');
+var orderChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Nike', 'Adidas', 'Vans', 'Converse'],
+        datasets: [{
+            label: 'Total sales',
+            data: [12, 19, 3, 5, 2, 3],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
