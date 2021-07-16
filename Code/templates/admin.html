@@ -41,10 +41,10 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <a class="navbar-brand" href="#">SHOE SHOP - ADMIN DASHBOARD</a>
+          <a class="navbar-brand" href="#">FOOTR - ADMIN DASHBOARD</a>
 
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/home">Main website</a>
+            <a class="btn btn-outline-light" href="/home">Main website</a>
           </li>
         </ul>
 
@@ -431,7 +431,7 @@
           <div class="row py-1">
             <div class="col">
               <label class="form-label">Product ID</label>
-              <input type="number" class="form-control" placeholder="Find product to edit" name="productid" required>
+              <input type="number" class="form-control" placeholder="Find product to edit" name="product_id">
             </div>
 
             <div class="col">
@@ -493,7 +493,7 @@
               <td>£{{row[3]}}</td>
               <td>{{row[4]}}</td>
               <td>{{row[5]}}</td>
-              <td>{{row[6]}}</td>
+              <td>£{{row[6]}}</td>
             </tr>
             {% endfor %}
           </table>
@@ -504,29 +504,29 @@
       <div class="tab-pane fade" id="pills-home" role="tabpanel">
         <h3>Edit homepage banner</h3>
 
-        <form action="/admin" method="POST" class="py-3" name="edithomepage">
+        <form action="/admin" method="POST" class="py-3" name="edithomebanner">
 
           <div class="row py-3">
 
             <div class="col">
               <label class="form-label">Text</label>
-              <textarea class="form-control" id="home-txt" rows="2" required></textarea>
+              <textarea class="form-control" id="home-txt" name="home-txt" rows="2" required></textarea>
               <p>Tip: use &lt;br&gt; to show a break</p>
             </div>
 
             <div class="col">
               <div>
-                <input type="color" class="form-control-color" id="bg-colour" required>
+                <input type="color" class="form-control-color" id="bg-colour" name="bg-colour" required>
                 <label for="bg-colour" class="form-label">Background colour</label>
               </div>
 
               <div>
-                <input type="color" class="form-control-color" id="txt-colour" required>
+                <input type="color" class="form-control-color" id="txt-colour" name="txt-colour" required>
                 <label for="txt-colour" class="form-label">Text colour</label>
               </div>
 
               <div>
-                <input type="color" class="form-control-color" id="outline-colour" required>
+                <input type="color" class="form-control-color" id="outline-colour" name="outline-colour" required>
                 <label for="outline-colour" class="form-label">Text outline colour</label>
               </div>
             </div>
@@ -534,7 +534,7 @@
           </div>
 
           <div class="row">
-            <button class="btn btn-info w-25" onclick="preview_banner()">Preview</button>
+            <button type="button" class="btn btn-info w-25" onclick="preview_banner()">Preview</button>
           </div>
 
           <div class="row py-3">
@@ -546,9 +546,9 @@
           </div>
 
           <div class="row">
-            <button type="submit" class="btn btn-primary w-25" name="edithomebanner">Submit</button>
           </div>
-
+            
+          <button type="submit" class="btn btn-primary w-25" name="edithomebanner">Submit</button>
         </form>
 
       </div>

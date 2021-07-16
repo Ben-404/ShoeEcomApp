@@ -210,13 +210,9 @@ def get_home_products():
     # Close connection
     conn.close()
 
-    # Save the extra information from the JSON
-    saleon = homedata[1]["saleon"]
-    saleimage = homedata[1]["saleimage"]
+    return products, saleproducts
 
-    return products, saleproducts, saleon, saleimage
-
-def save_home_products():
+def save_home_products(text, bg_colour, txt_colour, outline_colour):
     data = [
         [
             "1009", 
@@ -225,8 +221,10 @@ def save_home_products():
             "1013"
         ],
         {
-            "saleon": "true",
-            "saleimage": "static\\images\\nikesale.png"
+            "text": "test content",
+            "bg_colour": "#ffffff",
+            "txt_colour": "#000000",
+            "outline_colour": "#B1B1B1",
         }
     ]
 
@@ -276,20 +274,32 @@ def load_basket_products(cookies):
     return products, total
 
 def edithomebanner(formdata):
-    print("function run")
+    text = formdata["home-txt"]
     bg_colour = formdata["bg-colour"]
-    print(bg_colour)
+    txt_colour = formdata["txt-colour"]
+    outline_colour = formdata["outline-colour"]
+    
+    save_home_products(text, bg_colour, txt_colour, outline_colour)
 
 
 
 @app.route('/home', methods =['GET', 'POST'])
 def home():
-    save_home_products()
+    products, saleproducts = get_home_products()
+    
+    # Open JSON file
+    f = open('static\homedata.json')
 
-    products, saleproducts, saleon, saleimage = get_home_products()
+    # Return JSON object as dictionary
+    homedata = json.load(f)
+    homedata = json.dumps(homedata[1])
+
+    # Close file
+    f.close()
+    print(homedata)
 
     # return website and data files
-    return render_template('home.html', products=products, saleproducts=saleproducts, saleon=saleon, saleimage=saleimage)
+    return render_template('home.html', products=products, saleproducts=saleproducts, homedata=homedata)
 
 @app.route('/all', methods =['GET', 'POST'])
 def all():

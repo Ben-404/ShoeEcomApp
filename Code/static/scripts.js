@@ -29,3 +29,11 @@ function preview_banner(){
     document.getElementById("txt").innerHTML =text;
 }
 
+function load_home_banner(homedata){
+    // Set the style of banner to the values from homedata file
+    document.getElementById("bg").style.backgroundColor = homedata.bg_colour;
+    document.getElementById("txt").style.color = homedata.txt_colour;
+    document.getElementById("txt").style.backgroundColor = homedata.outline_colour;
+    document.getElementById("txt").innerHTML = homedata.text;
+}
+

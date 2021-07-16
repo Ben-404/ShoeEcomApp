@@ -1,15 +1,15 @@
 {
     "key_stats": {
-        "orders": 42,
-        "revenue": 2782,
+        "orders": 79,
+        "revenue": 3509,
         "traffic": 0,
         "satisfaction": 0
     },
     "sales_by_brand": {
-        "nike": 57,
-        "adidas": 34,
+        "nike": 62,
+        "adidas": 35,
         "vans": 27,
-        "converse": 39
+        "converse": 42
     },
     "user_satisfaction": {
         "very satisfied": 50,
