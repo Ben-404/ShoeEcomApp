@@ -1,14 +1,14 @@
 [
     [
-        "1009", 
+        "1009",
         "1007",
         "1019",
         "1013"
     ],
     {
-        "text": "test 2",
-        "bg_colour": "#000000",
-        "txt_colour": "#f5f5f5",
-        "outline_colour": "#B1B1B1"
+        "text": "SALE!",
+        "bg_colour": "#ffa857",
+        "txt_colour": "#ffffff",
+        "outline_colour": "#000000"
     }
 ]

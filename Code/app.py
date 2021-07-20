@@ -2,9 +2,10 @@
 from flask import Flask, render_template, request, redirect, make_response
 # Import SQLite, to interact with database
 import sqlite3
-# Import my algorithms & statistics files
+# Import my algorithms, statistics and email sender files
 import algorithms
 import statistics
+import emailsender
 # Import JSON library
 import json
 
@@ -221,10 +222,10 @@ def save_home_products(text, bg_colour, txt_colour, outline_colour):
             "1013"
         ],
         {
-            "text": "test content",
-            "bg_colour": "#ffffff",
-            "txt_colour": "#000000",
-            "outline_colour": "#B1B1B1",
+            "text": text,
+            "bg_colour": bg_colour,
+            "txt_colour": txt_colour,
+            "outline_colour": outline_colour
         }
     ]
 
@@ -422,6 +423,34 @@ def remove_from_basket(productid):
 # Checkout
 @app.route('/checkout', methods =['GET', 'POST'])
 def checkout():
+    # return website and data files
+    return render_template('checkout.html')
+
+# Order confirmed
+@app.route('/confirmed', methods =['GET', 'POST'])
+def orderconfirmed():
+    
+    # Recieve formdata sent from checkout page
+    if request.method == "POST":
+        formdata = request.form
+
+        # Update gender stats
+        user_gender = formdata["gender"]
+        if user_gender == "male" or user_gender == "female":
+            statistics.update_stats("gender", user_gender, 1)
+        
+        # Update age stats
+        user_age = formdata["age"]
+        statistics.update_stats("age", user_age, 1)
+
+        # Update user satisfaction
+        user_sat = formdata["flexRadioDefault"]
+        statistics.update_stats("user_satisfaction", user_sat, 1)
+
+        # Send an order confirmation email using my email sender file
+        emailsender.order_confirmation(formdata['email'], formdata['name'], "0281739")
+        
+
     # Get all the products added to basket and convert them to dict
     productdict = request.cookies.to_dict()
 
@@ -456,7 +485,9 @@ def checkout():
 
 
     # return website and data files
-    return render_template('checkout.html', products=products)
+    return render_template('orderconfirmed.html')
+
+
 
 @app.route('/admin', methods =['GET', 'POST'])
 def admin():

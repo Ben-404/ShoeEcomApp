@@ -1,33 +1,34 @@
 {
     "key_stats": {
-        "orders": 79,
-        "revenue": 3509,
+        "orders": 11,
+        "revenue": 1466,
         "traffic": 0,
         "satisfaction": 0
     },
     "sales_by_brand": {
-        "nike": 62,
-        "adidas": 35,
-        "vans": 27,
-        "converse": 42
+        "nike": 6,
+        "adidas": 2,
+        "vans": 2,
+        "converse": 8
     },
     "user_satisfaction": {
-        "very satisfied": 50,
-        "satisfied": 36,
-        "unsatisfied": 4,
-        "very unsatisfied": 10
+        "very_satisfied": 98,
+        "satisfied": 126,
+        "unsatisfied": 81,
+        "very_unsatisfied": 56,
+        "score": 24.7
     },
     "gender": {
-        "male": 34,
-        "female": 52
+        "male": 5,
+        "female": 6
     },
     "age": {
-        "16-18": 43,
-        "19-25": 45,
-        "26-30": 37,
-        "31-39": 34,
-        "40-50": 25,
-        "50+": 14
+        "16-18": 2,
+        "19-25": 6,
+        "26-30": 0,
+        "31-39": 1,
+        "40-50": 1,
+        "50+": 1
     },
     "traffic": {
         "22/06": 127,

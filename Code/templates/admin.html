@@ -108,7 +108,7 @@
           <div class="card mb-3 bg-info">
             <div class="card-header">Customer satisfaction</div>
             <div class="card-body">
-              <h5 class="card-title">6.8/10</h5>
+              <h5 class="card-title">{{ admindata["user_satisfaction"]["score"] }}/10</h5>
             </div>
           </div>
 
@@ -240,10 +240,10 @@
                 datasets: [{
                   label: 'User satisfaction',
                   data: [
-                    {{ admindata["user_satisfaction"]["very satisfied"] }},
+                    {{ admindata["user_satisfaction"]["very_satisfied"] }},
                 {{ admindata["user_satisfaction"]["satisfied"] }},
                   {{ admindata["user_satisfaction"]["unsatisfied"] }},
-            {{ admindata["user_satisfaction"]["very unsatisfied"] }}
+            {{ admindata["user_satisfaction"]["very_unsatisfied"] }}
                         ],
             backgroundColor: [
               '#52a121',
@@ -471,6 +471,7 @@
           </div>
 
           <button type="submit" class="btn btn-primary" name="editexisting">Submit</button>
+        </form>
       </div>
 
       <!-- View products -->

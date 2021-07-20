@@ -16,7 +16,7 @@
 
     <script src="static\scripts.js"></script>
 
-    <title>Checkout</title>
+    <title>ORDER CONFIRMED!</title>
   </head>
   <body>
 
@@ -52,116 +52,32 @@
  
                 </ul>
 
-                <button class="btn btn-light mx-4" onclick="document.location='/basket'">My basket</button>
-                
+                <button class="btn btn-light mx-4" onclick="document.location='/home'">Return home</button>
+
           </div>
         </div>
     </nav>
     
     <div class="container py-3">
-      <h3>Payment method</h3>
-      
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-        <label class="form-check-label" for="flexRadioDefault1">
-          Debit/credit card
-        </label>
+      <img src="static\icons\orderconfirm.svg" class="rounded mx-auto d-block w-25">
+      <h1><strong>Thank you</strong></h1>
+      <h4>Your order is confirmed</h4>
+
+
+
+      <hr class="bg-dark border-2 border-top border-dark mt-5">
+
+      <h3 class="mb-5">Order status</h3>
+
+      <div class="progress" style="height: 30px;">
+        <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 25%">Order confirmed</div>
+        <div class="progress-bar bg-secondary" role="progressbar" style="width: 25%">Dispatched</div>
+        <div class="progress-bar bg-secondary" role="progressbar" style="width: 25%">Out for delivery</div>
+        <div class="progress-bar bg-secondary" role="progressbar" style="width: 25%">Delivered</div>
       </div>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
-        <label class="form-check-label" for="flexRadioDefault2">
-          PayPal
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3">
-        <label class="form-check-label" for="flexRadioDefault3">
-          Apple pay
-        </label>
-      </div>
-      
-      <img src="static\icons\payment_logo.png" class="img-fluid w-25 pt-2">
       
     </div>
-
-    <form action="/confirmed" method="POST" class="py-4 container" name="checkout">
-      
-      <h3>Your details</h3>
-      
-      <div class="row py-1">
-        <div class="col-6">
-          <label class="form-label">Name</label>
-          <input type="text" class="form-control" name="name" required>
-        </div>
-        
-        <div class="col">
-          <label class="form-label">Gender</label>
-          <select class="form-select" name="gender">
-            <option selected>Please select</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-
-        <div class="col">
-          <label class="form-label">Age</label>
-          <select class="form-select" name="age">
-            <option selected>Please select</option>
-            <option value="16-18">16-18</option>
-            <option value="19-25">19-25</option>
-            <option value="26-30">26-30</option>
-            <option value="31-39">31-39</option>
-            <option value="40-50">30-50</option>
-            <option value="50+">50+</option>
-          </select>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <label class="form-label">Email address</label>
-          <input type="email" class="form-control" name="email" required>
-        </div>
-      </div>
-
-
-
-
-      <h3 class="pt-4">Your experience</h3>
-      <p>How satisfied are you with your experience?</p>
-
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="flexRadioDefault" id="veryunsatisfied" value="very_unsatisfied">
-        <label class="form-check-label" for="veryunsatisfied">
-          Very unsatisfied
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="flexRadioDefault" id="unsatisfied" value="unsatisfied">
-        <label class="form-check-label" for="unsatisfied">
-          Unsatisfied
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="flexRadioDefault" id="satisfied" value="satisfied">
-        <label class="form-check-label" for="satisfied">
-          Satisfied
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="flexRadioDefault" id="verysatisfied" value="very_satisfied">
-        <label class="form-check-label" for="verysatisfied">
-          Very satisfied
-        </label>
-      </div>
-
-
-      <button type="submit" class="btn btn-primary mt-5" name="checkoutinfo">Complete purchase</button>
-    </form>
-
-
-
-          
+            
     <section>
       <!-- Footer -->
       <footer class="bg-dark text-white">

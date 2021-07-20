@@ -7,13 +7,14 @@ function sorthigh(){
 }
 
 function add_basket(productid){
-    var location = window.location.href.replace(window.location.pathname, "")
-    var requestaddress = location + '/basket/' +  productid
+    var location = window.location.href.replace(window.location.pathname, "");
+    var requestaddress = location + '/basket/' +  productid;
 
     fetch(requestaddress,
         {method: 'POST'}
     )
 }
+
 
 function preview_banner(){
     // Selecting the input element and get its value 
