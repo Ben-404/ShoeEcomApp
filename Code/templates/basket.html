@@ -52,11 +52,11 @@
  
                 </ul>
 
-                <button class="btn btn-light mx-4" onclick="document.location='/home'">My basket</button>
+                <button class="btn btn-light mx-4" onclick="document.location='/home'"><i class="bi bi-house"></i> Home</button>
 
                 <form class="d-flex" action="/search" method="POST">
                   <input class="form-control me-2" type="search" placeholder="Search" name="search">
-                  <button class="btn btn-outline-primary" type="submit">Search</button>
+                  <button class="btn btn-outline-primary" type="submit"><i class="bi bi-search"></i></button>
                 </form>
           </div>
         </div>
@@ -84,7 +84,7 @@
                           {%- endif %}
                         </h5>
                         
-                        <a class="btn btn-danger" href="/removebasket/{{product[0]}}" >Remove</a>
+                        <a class="btn btn-danger" href="/removebasket/{{product[0]}}" ><i class="bi bi-trash"></i> Remove</a>
                         
                       </div>
                     </div>
@@ -101,9 +101,9 @@
 
               <hr class="bg-dark border-2 border-top border-dark">
               
-              <h4>Subtotal: £{{ total }}</h4>
+              <h4><i class="bi bi-tags"></i> Subtotal: £{{ total }}</h4>
               
-              <h4>Delivery:
+              <h4><i class="bi bi-truck"></i> Delivery:
                 {% if total > 100 -%}
                   £0
                 {% else %}

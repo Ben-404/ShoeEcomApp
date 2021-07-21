@@ -6,6 +6,8 @@ function sorthigh(){
     window.location.pathname += "/sort/high";
 }
 
+
+
 function add_basket(productid){
     var location = window.location.href.replace(window.location.pathname, "");
     var requestaddress = location + '/basket/' +  productid;
@@ -13,6 +15,10 @@ function add_basket(productid){
     fetch(requestaddress,
         {method: 'POST'}
     )
+
+    var b1 = document.getElementById("addbasketbtn" + productid);
+    b1.classList.remove('btn-primary');
+    b1.classList.add("btn-success");
 }
 
 

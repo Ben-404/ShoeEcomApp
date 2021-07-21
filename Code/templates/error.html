@@ -62,56 +62,15 @@
         </div>
     </nav>
 
-    
-    <div class="container-fluid py-2">
-      <div class="dropdown">
-        <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" "">
-              <i class="bi bi-filter-left"></i> Sort by
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <li><a class="dropdown-item" onclick="sortlow()" >Price: lowest first</a></li>
-              <li><a class="dropdown-item" onclick="sorthigh()" >Price: highest first</a></li>
-            </ul>
-        </div>
-      </div>
-      
-      <div class="container py-3">
-        <div class="row">
-          
-          {% for row in rows %}
-          <div class="col py-2">
-            
-                <div class="card" style="width: 18rem;">
-                  
-                  <img src="..\..\static\product_images\{{row[2]}}.jpg" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title">{{row[1]}}</h5> 
-                    <p class="card-text">{{row[4]}} <br>Product ID: {{row[0]}}</p>
-                    
-                    <a class="btn btn-primary" onclick="add_basket({{ row[0] }})" id="addbasketbtn{{ row[0] }}">
-                      {% if row[5] == 'Sale' -%}
-                        <del>£{{row[3]}}</del> £{{row[6]}}
-                      {% else %}
-                        <i class="bi bi-bag-check"></i> £{{row[3]}}
-                      {%- endif %}
-                    </a>
-                          
-                    {% if row[5] == 'Sale' -%}
-                      <span class="badge bg-danger text-light">Sale!</span> 
-                    {%- endif %}
-                    {% if row[5] == 'Low stock' -%}
-                      <span class="badge bg-warning text-dark"> {{row[5]}} </span> 
-                    {%- endif %}
-                  </div>
-                        
-                </div>  
-              </div>
-            {% endfor %}
-            
-          </div>
-        </div>
+  
+    <div class="container text-center">
+      <img src="static\icons\error.svg" class="rounded mx-auto d-block w-25 py-5">
 
-        
+      <h1 class="py-3">Error 404!</h1>
+      <h3>Sorry, this page cannot be found. Did you type it in correctly?</h3>
+
+      <button class="btn btn-outline-primary my-5"><i class="bi bi-house"></i> Return home</button>
+    </div>
         
         
         <section class="">
@@ -179,7 +138,7 @@
           
           <!-- Copyright -->
           <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-            © 2020 Copyright:
+            © 2021 Copyright:
             <a class="text-white" href="/home">FOOTR</a>
           </div>
           <!-- Copyright -->

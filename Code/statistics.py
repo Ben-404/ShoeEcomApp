@@ -37,20 +37,29 @@ def get_stats():
     
 """
 def user_sat_score(data):
-    # Multiply the number of users by the weighting for each score
-    v_sat = (data["very_satisfied"] * 0.4)
-    sat = (data["satisfied"] * 0.3)
-    unsat = (data["unsatisfied"] * 0.2)
-    v_unset = (data["very_unsatisfied"] * 0.1)
+    # Retrieve the number of users who submitted each satisfaction rating
+    v_sat = data["very_satisfied"]
+    sat = data["satisfied"]
+    unsat = data["unsatisfied"]
+    v_unset = data["very_unsatisfied"]
 
-    # Add together the weighted scores and divide by 100
-    score = (v_sat + sat + unsat + v_unset)
-    print(score)
-    score = score/10
-    print(score)
-    # Multiply scores by 2.5 to get a score out of 10, then round it
+    # Save the total number of ratings
+    unweight_total = v_sat + sat + unsat + v_unset
+
+
+    # Multiply the number of users by the weighting for each score
+    weight_v_sat = v_sat * 4
+    weight_sat = sat * 3
+    weight_unsat = unsat * 2
+    weight_v_unsat = v_unset * 1
+
+    # Save the total number of weighted ratings
+    weight_total = weight_v_sat + weight_sat + weight_unsat + weight_v_unsat
+
+    # Divide the weighted ratings by the number of overall ratings
+    score = weight_total / unweight_total
+    # Multiply by 2.5 to get a score out of 10
     score = round((score * 2.5), 1)
-    print(score)
 
     return score
     
