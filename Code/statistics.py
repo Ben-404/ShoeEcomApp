@@ -1,5 +1,7 @@
+from app import admin
 import json
 import sqlite3
+import datetime
 
 
 def call_database(sqlstatement):
@@ -66,6 +68,7 @@ def user_sat_score(data):
 
 
 def update_stats(subdict, key, value):
+
     # Open the file containing the admin stats
     admindatafile = open("static/admindata.json", "r+")
     # Read its contents
@@ -83,6 +86,40 @@ def update_stats(subdict, key, value):
 
     # Close file
     admindatafile.close()
+
+    # Reopen the file in write mode, update and close
+    admindatafile = open("static/admindata.json", "w")
+    admindatafile.write(json.dumps(admindata, indent=4))
+    admindatafile.close()
+
+
+
+def update_traffic():
+    # Open the file containing the admin stats
+    admindatafile = open("static/admindata.json", "r+")
+    # Read its contents
+    admindata = admindatafile.read()
+
+    # Convert contents from JSON to python list
+    admindata = json.loads(admindata)
+
+    print(admindata['traffic'])
+
+
+    for i in range(14):
+        print(i)
+        day = datetime.datetime.now() - datetime.timedelta(days=i)
+        day = day.strftime("%d/%m")
+        print(day)
+
+        # Update traffic subdict
+        admindata['traffic'][day] = 0
+
+
+    # Close file
+    admindatafile.close()
+
+    print(admindata['traffic'])
 
     # Reopen the file in write mode, update and close
     admindatafile = open("static/admindata.json", "w")

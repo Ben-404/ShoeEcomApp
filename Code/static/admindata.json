@@ -1,39 +1,51 @@
 {
     "key_stats": {
-        "orders": 14,
-        "revenue": 1689,
+        "orders": 16,
+        "revenue": 2029,
         "traffic": 0,
         "satisfaction": 0
     },
     "sales_by_brand": {
         "nike": 8,
-        "adidas": 3,
-        "vans": 2,
+        "adidas": 5,
+        "vans": 3,
         "converse": 8
     },
     "user_satisfaction": {
         "very_satisfied": 99,
-        "satisfied": 128,
-        "unsatisfied": 81,
+        "satisfied": 129,
+        "unsatisfied": 82,
         "very_unsatisfied": 56,
         "score": 6.9
     },
     "gender": {
-        "male": 8,
-        "female": 6
+        "male": 9,
+        "female": 7
     },
     "age": {
         "16-18": 4,
         "19-25": 6,
-        "26-30": 1,
+        "26-30": 2,
         "31-39": 1,
-        "40-50": 1,
+        "40-50": 2,
         "50+": 1
     },
     "traffic": {
-        "22/06": 127,
-        "23/06": 149,
-        "24/06": 143,
-        "25/06": 169
+        "22/07": 0,
+        "21/07": 0,
+        "20/07": 0,
+        "19/07": 0,
+        "18/07": 0,
+        "17/07": 0,
+        "16/07": 0,
+        "15/07": 0,
+        "14/07": 0,
+        "13/07": 0,
+        "12/07": 0,
+        "11/07": 0,
+        "10/07": 0,
+        "09/07": 0,
+        "23/07": 0,
+        "24/07": 0
     }
 }

@@ -93,7 +93,7 @@ def new_product(formdata):
 
     # Prepare the string for SQL query
     values = formdata[0]+", '" + formdata[1]+"', '" + formdata[2]+"', " + formdata[3]+", '" + formdata[4]+"', '" + formdata[5]+"', " + formdata[6]
-    
+
     #Connect to sqlite
     conn = sqlite3.connect('static\products.db')
 
@@ -102,6 +102,7 @@ def new_product(formdata):
 
     # Preparing SQL queries to INSERT a record into the database
     sqlstatement = "INSERT INTO productdata(productid, productname, imgname, price, brand, alert, saleprice) VALUES(" + values + ")"
+    print(sqlstatement)
     cursor.execute(sqlstatement)
 
     # Commit the changes to database
@@ -282,7 +283,13 @@ def edithomebanner(formdata):
     
     save_home_products(text, bg_colour, txt_colour, outline_colour)
 
+@app.route('/v1', methods =['GET', 'POST'])
+def version():
+    # Run the function to retrieve products matching a certain brand
+    products = get_products_brand('all')
 
+    # return website and data files
+    return render_template('version.html', rows=products)
 
 @app.route('/home', methods =['GET', 'POST'])
 def home():
@@ -306,6 +313,8 @@ def home():
 def all():
     # Run the function to retrieve products matching a certain brand
     products = get_products_brand('all')
+
+    statistics.update_traffic()
 
     # return website and data files
     return render_template('index.html', rows=products)

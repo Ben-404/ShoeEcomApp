@@ -84,16 +84,7 @@
 
         <div class="card-group">
 
-          <div class="card mb-3 bg-danger text-white">
-            <div class="card-header bg-transparent">
-              <i class="bi bi-box-seam"></i> Orders
-            </div>
-            <div class="card-body">
-              <h5 class="card-title">Total: {{ admindata["key_stats"]["orders"] }}</h5>
-            </div>
-          </div>
-
-          <div class="card mb-3 bg-success text-white">
+          <div class="card mb-3 bg-secondary text-white">
             <div class="card-header bg-transparent">
               <i class="bi bi-cash-coin"></i> Revenue
             </div>
@@ -102,12 +93,30 @@
             </div>
           </div>
 
+          <div class="card mb-3 bg-success text-white">
+            <div class="card-header bg-transparent">
+              <i class="bi bi-box-seam"></i> Orders
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Total: {{ admindata["key_stats"]["orders"] }}</h5>
+            </div>
+          </div>
+
           <div class="card mb-3 bg-warning">
             <div class="card-header bg-transparent">
               <i class="bi bi-bar-chart-line"></i> Traffic
             </div>
             <div class="card-body">
-              <h5 class="card-title">Total: 781 unique</h5>
+              <h5 class="card-title">Total views: 781</h5>
+            </div>
+          </div>
+
+          <div class="card mb-3 bg-danger text-white">
+            <div class="card-header bg-transparent">
+              <i class="bi bi-credit-card"></i> Conversion rate
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">15%</h5>
             </div>
           </div>
 
