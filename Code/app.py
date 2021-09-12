@@ -6,8 +6,9 @@ import sqlite3
 import algorithms
 import statistics
 import emailsender
-# Import JSON library
+# Import extra libraries
 import json
+import requests
 
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
@@ -283,6 +284,34 @@ def edithomebanner(formdata):
     
     save_home_products(text, bg_colour, txt_colour, outline_colour)
 
+def get_news():
+    # Set API url
+    url = 'https://newsapi.org/v2/everything?domains=sneakernews.com&pagesize=4&apiKey=ac97243a35de42a1a73a471b95940193'
+
+    # Make request to API
+    news = requests.get(url)
+    # Format response data into JSON
+    news = news.content
+    news = json.loads(news)
+
+    # List to hold data we extract
+    news_data = []
+
+    # For each article in API response
+    for i in news['articles']:
+
+        # Create a new dict with the data we want
+        article = {
+            "title": i['title'],
+            "description": i['description'],
+            'url': i['url'],
+            'image': i['urlToImage']
+        }
+        
+        news_data.append(article)
+    
+    return news_data
+
 @app.route('/v1', methods =['GET', 'POST'])
 def version():
     # Run the function to retrieve products matching a certain brand
@@ -503,6 +532,9 @@ def admin():
     # Run the function to retrieve products matching a certain brand
     products = get_products_brand('all')
 
+    # Retrieve news data from function
+    #news_data = get_news()
+
     if request.method == "POST":
         # Save submitted form data into variable
         formdata = request.form
@@ -525,6 +557,7 @@ def admin():
 
     # return website and data files
     return render_template('admin.html', rows=products, admindata=admindata)
+    #, news_data=news_data
 
 
 @app.errorhandler(404)
