@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+    crossorigin="anonymous"></script>
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+  <!-- Chart.js library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.3.2/chart.min.js"
+    integrity="sha512-VCHVc5miKoln972iJPvkQrUYYq7XpxXzvqNfiul1H4aZDwGBGC0lq373KNleaB2LpnC2a/iNfE5zoRYmB4TRDQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  </script>
+
+  <script src="static\scripts.js"></script>
+
+  <title>ADMIN</title>
+</head>
+
+<body>
+
+  <!-- Nav menu-->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <a class="navbar-brand" href="#">FOOTR - ADMIN DASHBOARD</a>
+
+          <li class="nav-item">
+            <a class="btn btn-outline-light" href="/home">Main website</a>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- Tabbed content-->
+  <div class="container py-3">
+
+    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="pills-statistics-tab" data-bs-toggle="pill"
+          data-bs-target="#pills-statistics" type="button" role="tab">Insights</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact"
+          type="button" role="tab">Edit products</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
+          type="button" role="tab">View products</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button"
+          role="tab">Edit homepage</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="pills-news-tab" data-bs-toggle="pill" data-bs-target="#pills-news" type="button"
+          role="tab">News</button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="pills-tabContent">
+
+      <!-- Statistics -->
+      <div class="tab-pane fade show active" id="pills-statistics" role="tabpanel">
+        <h3 class="pb-3">Key figures</h3>
+
+
+        <div class="card-group">
+
+          <div class="card mb-3 bg-secondary text-white">
+            <div class="card-header bg-transparent">
+              <i class="bi bi-cash-coin"></i> Revenue
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Total: £{{ admindata["key_stats"]["revenue"] }}</h5>
+            </div>
+          </div>
+
+          <div class="card mb-3 bg-success text-white">
+            <div class="card-header bg-transparent">
+              <i class="bi bi-box-seam"></i> Orders
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Total: {{ admindata["key_stats"]["orders"] }}</h5>
+            </div>
+          </div>
+
+          <div class="card mb-3 bg-warning">
+            <div class="card-header bg-transparent">
+              <i class="bi bi-bar-chart-line"></i> Traffic
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Total views: 781</h5>
+            </div>
+          </div>
+
+          <div class="card mb-3 bg-danger text-white">
+            <div class="card-header bg-transparent">
+              <i class="bi bi-credit-card"></i> Conversion rate
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">15%</h5>
+            </div>
+          </div>
+
+          <div class="card mb-3 bg-info">
+            <div class="card-header">
+              <i class="bi bi-emoji-smile"></i> Customer satisfaction
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">{{ admindata["user_satisfaction"]["score"] }}/10</h5>
+            </div>
+          </div>
+
+        </div>
+
+
+
+
+
+        <hr class="bg-dark border-2 border-top border-dark">
+
+
+
+        <h3 class="pb-3"><i class="bi bi-cart2"></i> Sales by brand</h3>
+
+        <div class="container mb-5">
+          <div class="row">
+            <div class="col">
+              <canvas id="salesByBrandBar" width="400" height="200"></canvas>
+            </div>
+            <div class="col">
+              <canvas id="salesByBrandPie" width="400" height="200"></canvas>
+            </div>
+          </div>
+        </div>
+
+
+
+        <hr class="bg-dark border-2 border-top border-dark">
+
+        <h3 class="pb-3"><i class="bi bi-search"></i> User insights</h3>
+
+        <div class="container mb-5">
+          <div class="row">
+            <div class="col">
+              <canvas id="userSatisfactionPie" width="400" height="200"></canvas>
+            </div>
+            <div class="col">
+              <canvas id="ageBar" width="400" height="200"></canvas>
+            </div>
+            <div class="col">
+              <canvas id="genderPie" width="400" height="200"></canvas>
+            </div>
+          </div>
+        </div>
+
+
+        <hr class="bg-dark border-2 border-top border-dark">
+
+
+        <h3 class="pb-3"><i class="bi bi-bar-chart-line"></i> Traffic</h3>
+
+        <div class="container mb-5">
+          <div class="row">
+            <div class="col">
+              <canvas id="trafficBar" width="800" height="200"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- JS script to create charts  -->
+        <script text="text/javascript">
+
+          var ctx = document.getElementById('salesByBrandBar').getContext('2d');
+            var orderChart = new Chart(ctx, {
+              type: 'bar',
+              data: {
+                labels: ['Nike', 'Adidas', 'Vans', 'Converse'],
+                datasets: [{
+                  label: 'Total sales',
+                  data: [
+                    {{ admindata["sales_by_brand"]["nike"] }},
+                {{ admindata["sales_by_brand"]["adidas"] }},
+                  {{ admindata["sales_by_brand"]["vans"] }},
+            {{ admindata["sales_by_brand"]["converse"] }}
+                        ],
+            backgroundColor: [
+              '#4b7e9b',
+              '#34a199',
+              '#8eb76e',
+              '#ffb86a'
+            ],
+              borderWidth: 1
+                    }]
+                },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
+              }
+            }
+              
+            });
+
+
+            var ctx = document.getElementById('salesByBrandPie').getContext('2d');
+            var orderChart = new Chart(ctx, {
+              type: 'doughnut',
+              data: {
+                labels: ['Nike', 'Adidas', 'Vans', 'Converse'],
+                datasets: [{
+                  label: 'Total sales',
+                  data: [
+                    {{ admindata["sales_by_brand"]["nike"] }},
+                {{ admindata["sales_by_brand"]["adidas"] }},
+                  {{ admindata["sales_by_brand"]["vans"] }},
+            {{ admindata["sales_by_brand"]["converse"] }}
+                        ],
+            backgroundColor: [
+              '#4b7e9b',
+              '#34a199',
+              '#8eb76e',
+              '#ffb86a'
+            ]
+                    }]
+                  },
+            options: {
+              maintainAspectRatio: false,
+                  }
+            });
+
+
+            var ctx = document.getElementById('userSatisfactionPie').getContext('2d');
+            var orderChart = new Chart(ctx, {
+              type: 'doughnut',
+              data: {
+                labels: ['Very satisfied', 'Satisfied', 'Unsatisfied', 'Very unsatisfied'],
+                datasets: [{
+                  label: 'User satisfaction',
+                  data: [
+                    {{ admindata["user_satisfaction"]["very_satisfied"] }},
+                {{ admindata["user_satisfaction"]["satisfied"] }},
+                  {{ admindata["user_satisfaction"]["unsatisfied"] }},
+            {{ admindata["user_satisfaction"]["very_unsatisfied"] }}
+                        ],
+            backgroundColor: [
+              '#52a121',
+              '#aedd6b',
+              '#DB9B2B',
+              '#CC3232'
+            ]
+                    }]
+                  },
+            options: {
+              maintainAspectRatio: false,
+                  }
+            });
+
+
+            var ctx = document.getElementById('genderPie').getContext('2d');
+            var orderChart = new Chart(ctx, {
+              type: 'doughnut',
+              data: {
+                labels: ['Male', 'Female'],
+                datasets: [{
+                  label: 'Gender',
+                  data: [
+                    {{ admindata["gender"]["male"] }},
+                {{ admindata["gender"]["female"] }}
+                        ],
+            backgroundColor: [
+              '#4B7E9B',
+              '#FFB86A'
+            ]
+                    }]
+                  },
+            options: {
+              maintainAspectRatio: false,
+                  }
+            });
+
+
+            var ctx = document.getElementById('ageBar').getContext('2d');
+            var orderChart = new Chart(ctx, {
+              type: 'bar',
+              data: {
+                labels: ['16-18', '19-25', '26-30', '31-39', '40-50', '50+'],
+                datasets: [{
+                  label: 'Age',
+                  data: [
+                    {{ admindata["age"]["16-18"] }},
+                {{ admindata["age"]["19-25"] }},
+                  {{ admindata["age"]["26-30"] }},
+            {{ admindata["age"]["31-39"] }},
+            {{ admindata["age"]["40-50"] }},
+            {{ admindata["age"]["50+"] }}
+                        ],
+            backgroundColor: [
+              '#4b7e9b',
+              '#3198a8',
+              '#3bb0a2',
+              '#72c48d',
+              '#b5d276',
+              '#ffd871'
+            ],
+              borderWidth: 1
+                    }]
+                },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
+              }
+            }
+            });
+
+
+            var ctx = document.getElementById('trafficBar').getContext('2d');
+            var orderChart = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: ['test1', 'test2', 'test3', 'test4'],
+                datasets: [{
+                  label: 'Test',
+                  data: [
+                    235,
+                    334,
+                    323,
+                    278
+                  ],
+                  fill: false,
+                  borderWidth: 3,
+                  borderColor: '#4B7E9B',
+                  tension: 0.1
+                }]
+              },
+            });
+        </script>
+
+        <h6 class="text-muted" id="last-updated">Page last updated: ##:##:##</h6>
+        <!-- JS script to set page last updated message -->
+        <script type="text/javascript">
+          var today = new Date();
+          var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+          document.getElementById("last-updated").innerHTML = "Page last updated: " + time;
+        </script>
+
+      </div>
+
+      <!-- Edit products -->
+      <div class="tab-pane fade" id="pills-contact" role="tabpanel">
+        <form action="/admin" method="POST" class="py-3" name="addnew">
+
+          <h3>Add new product</h3>
+
+          <div class="row py-1">
+            <div class="col">
+              <label class="form-label">Product name</label>
+              <input type="text" class="form-control" name="productname" required>
+            </div>
+
+            <div class="col">
+              <label class="form-label">Product ID</label>
+              <input type="number" class="form-control" placeholder="4 digit code" name="productid">
+            </div>
+          </div>
+
+          <div class="row py-1">
+            <div class="col">
+              <label class="form-label">Brand</label>
+              <select class="form-select" name="brand" required>
+                <option selected>Select</option>
+                <option value="nike">Nike</option>
+                <option value="adidas">adidas</option>
+                <option value="vans">Vans</option>
+                <option value="converse">Converse</option>
+              </select>
+            </div>
+            <div class="col">
+              <label class="form-label">Image path</label>
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon3">product_images/</span>
+                <input type="text" class="form-control" id="image-path" name="imagepath" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="row py-1">
+            <div class="col">
+              <label class="form-label">Normal price</label>
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon3">£</span>
+                <input type="number" class="form-control" id="normal-price" name="normalprice" required>
+              </div>
+            </div>
+
+            <div class="col">
+              <label class="form-label">Default sale price</label>
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon3">£</span>
+                <input type="number" class="form-control" id="sale-price" name="saleprice" required>
+              </div>
+            </div>
+
+            <div class="col">
+              <label class="form-label">Alert</label>
+              <select class="form-select" name="alert" required>
+                <option selected>None</option>
+                <option value="Low stock">Low stock</option>
+                <option value="Sale">Sale</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary" name="addnew">Submit</button>
+        </form>
+
+        <hr class="bg-dark border-2 border-top border-dark">
+
+
+        <!-- Edit existing product -->
+        <form action="/admin" method="POST" class="py-5">
+
+          <h3>Edit existing product</h3>
+
+          <div class="row py-1">
+            <div class="col">
+              <label class="form-label">Product ID</label>
+              <input type="number" class="form-control" placeholder="Find product to edit" name="productid">
+            </div>
+
+            <div class="col">
+              <label class="form-label">Image path</label>
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon3">product_images/</span>
+                <input type="text" class="form-control" id="image-path" name="imagepath">
+              </div>
+            </div>
+          </div>
+
+          <div class="row py-1">
+            <div class="col">
+              <label class="form-label">Normal price</label>
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon3">£</span>
+                <input type="number" class="form-control" id="normal-price" name="normalprice">
+              </div>
+            </div>
+
+            <div class="col">
+              <label class="form-label">Sale price</label>
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon3">£</span>
+                <input type="number" class="form-control" id="sale-price" name="saleprice">
+              </div>
+            </div>
+
+            <div class="col">
+              <label class="form-label">Alert</label>
+              <select class="form-select" name="alert">
+                <option selected>None</option>
+                <option value="Low stock">Low stock</option>
+                <option value="Sale">Sale</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary" name="editexisting">Submit</button>
+          </form>
+      </div>
+
+      <!-- View products -->
+      <div class="tab-pane fade" id="pills-profile" role="tabpanel">
+        <div class="container">
+          <table class="table table-striped">
+            <thead class="table-dark">
+              <th>Product ID</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Brand</th>
+              <th>Alert</th>
+              <th>Sale price</th>
+            </thead>
+
+            {% for row in rows %}
+            <tr>
+              <td>{{row[0]}}</td>
+              <td>{{row[1]}}</td>
+              <td>£{{row[3]}}</td>
+              <td>{{row[4]}}</td>
+              <td>{{row[5]}}</td>
+              <td>£{{row[6]}}</td>
+            </tr>
+            {% endfor %}
+          </table>
+        </div>
+      </div>
+
+      <!-- Edit homepage -->
+      <div class="tab-pane fade" id="pills-home" role="tabpanel">
+        <h3>Edit homepage banner</h3>
+
+        <form action="/admin" method="POST" class="py-3" name="edithomebanner">
+
+          <div class="row py-3">
+
+            <div class="col">
+              <label class="form-label">Text</label>
+              <textarea class="form-control" id="home-txt" name="home-txt" rows="2" required></textarea>
+              <p>Tip: use &lt;br&gt; to show a break</p>
+            </div>
+
+            <div class="col">
+              <div>
+                <input type="color" class="form-control-color" id="bg-colour" name="bg-colour" required>
+                <label for="bg-colour" class="form-label">Background colour</label>
+              </div>
+
+              <div>
+                <input type="color" class="form-control-color" id="txt-colour" name="txt-colour" required>
+                <label for="txt-colour" class="form-label">Text colour</label>
+              </div>
+
+              <div>
+                <input type="color" class="form-control-color" id="outline-colour" name="outline-colour" required>
+                <label for="outline-colour" class="form-label">Text outline colour</label>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row">
+            <button type="button" class="btn btn-info w-25" onclick="preview_banner()">Preview</button>
+          </div>
+
+          <div class="row py-3">
+            <div id="bg" style="padding: 40px 0px 40px 0px;">
+              <h3 class="text-center align-middle"><span id="txt"
+                  style="padding: 3px 10px 3px 10px; line-height: 190%;">Click
+                  'preview' to see your content</span></h3>
+            </div>
+          </div>
+
+          <div class="row">
+          </div>
+            
+          <button type="submit" class="btn btn-primary w-25" name="edithomebanner">Submit</button>
+        </form>
+
+      </div>
+
+      <!-- News -->
+      <div class="tab-pane fade" id="pills-news" role="tabpanel">
+        <div class="container">
+
+        <h3 class="mt-4">Headlines</h3>
+        <div class="container">
+          <div class="row">
+
+            {% for article in news_data %}
+            <div class="col">
+              <div class="card" style="width: 18rem;">
+                <img src="{{article['image']}}" class="card-img-top">
+                <div class="card-body">
+                  <h5 class="card-title">{{article['title']}}</h5>
+                  <p class="card-text">{{article['description']}}</p>
+                  <a href="{{article['url']}}" class="btn btn-primary">Read more</a>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+
+          </div>
+        </div>
+
+        <h3 class="mt-5">Brand news</h3>
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <a class="twitter-timeline" href="https://twitter.com/nike" data-tweet-limit="2" data-width="300" ></a>
+                  <script async src="http://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+                <div class="col">
+                  <a class="twitter-timeline" href="https://twitter.com/adidas" data-tweet-limit="2" data-width="300" ></a>
+                  <script async src="http://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+                <div class="col">
+                  <a class="twitter-timeline" href="https://twitter.com/VANS_66" data-tweet-limit="2" data-width="300" ></a>
+                  <script async src="http://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+                <div class="col">
+                  <a class="twitter-timeline" href="https://twitter.com/converse" data-tweet-limit="2" data-width="300" ></a>
+                  <script async src="http://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+              </div>
+            </div>
+
+        </div>
+      </div>
+
+    </div>
+
+
+
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+
+</html>

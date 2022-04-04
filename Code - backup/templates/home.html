@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+    <script type="text/javascript" src="static\scripts.js"></script>
+
+    <title>HOME</title>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-expand-lg py-2 navbar-dark bg-dark">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <a class="navbar-brand" href="/home">
+                    <img src="\static\logo.svg" width="130px" height="52px">
+                </a>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/all">All</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/nike">Nike</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/adidas">adidas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/vans">Vans</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/converse">Converse</a>
+                    </li>
+ 
+                </ul>
+
+                <button class="btn btn-outline-light mx-4" onclick="document.location='/basket'"><i class="bi bi-bag"></i> Basket</button>
+                
+                <form class="d-flex" action="/search" method="POST">
+                    <input class="form-control me-2" type="search" placeholder="Search" name="search">
+                    <button class="btn btn-outline-primary" type="submit"><i class="bi bi-search"></i></button>
+                </form>
+          </div>
+        </div>
+    </nav>
+
+    <div class="container py-3">
+      <!--
+        <div style="background-color:rgb(127, 219, 119); padding: 40px 0px 40px 0px;">
+          <h3 class="text-center align-middle"><span style="color: white;background-color: rgb(0, 0, 0); padding: 3px 10px 3px 10px; line-height: 190%;">Loading...</span></h3>
+        </div>
+      -->
+        
+        <div id="bg" style="padding: 40px 0px 40px 0px;">
+          <h3 class="text-center align-middle">
+            <span id="txt" style="padding: 3px 10px 3px 10px; line-height: 190%;">
+              Loading content...
+            </span>
+          </h3>
+        </div>
+
+      <div class="row py-3">
+        <h4>Recommended for you</h4>
+
+          {% for product in products %}
+          <div class="col py-2">
+
+              <div class="card" style="width: 18rem;">
+                
+                <img src="..\..\static\product_images\{{product[2]}}.jpg" class="card-img-top">
+
+                <div class="card-body">
+                  <h5 class="card-title">{{product[1]}}</h5> 
+                  <p class="card-text">{{product[4]}} <br>Product ID: {{product[0]}}</p>
+                  
+                  <a class="btn btn-primary" onclick="add_basket({{product[0]}})" id="addbasketbtn{{ product[0] }}">
+                    {% if product[5] == 'Sale' -%}
+                      <del>£{{product[3]}}</del> £{{product[6]}}
+                    {% else %}
+                      £{{product[3]}}
+                    {%- endif %}
+                  </a>
+                </div>
+  
+              </div>  
+          </div>
+          {% endfor %}
+      </div>
+
+      <div class="row py-3">
+        <h4>On sale now</h4>
+
+          {% for product in saleproducts %}
+          <div class="col py-2">
+
+              <div class="card" style="width: 18rem;">
+                
+                <img src="..\..\static\product_images\{{product[2]}}.jpg" class="card-img-top">
+
+                <div class="card-body">
+                  <h5 class="card-title">{{product[1]}}</h5> 
+                  <p class="card-text">{{product[4]}} <br>Product ID: {{product[0]}}</p>
+                  
+                  <a class="btn btn-primary" onclick="add_basket({{product[0]}})">
+                    <del>£{{product[3]}}</del> £{{product[6]}}
+                  </a>
+
+                </div>
+  
+              </div>  
+          </div>
+          {% endfor %}
+      </div>
+  </div>
+    
+    <section class="">
+        <!-- Footer -->
+        <footer class="bg-dark text-white">
+          <!-- Grid container -->
+          <div class="container p-4">
+            <!--Grid row-->
+            <div class="row">
+              <!--Grid column-->
+              <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                <h5 class="text-uppercase">FOOTR</h5>
+      
+                <p>
+                  AWAITING CONTENT...
+                </p>
+              </div>
+              <!--Grid column-->
+      
+              <!--Grid column-->
+              <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Brands</h5>
+      
+                <ul class="list-unstyled mb-0">
+                  <li>
+                    <a href="/nike" class="text-white">Nike</a>
+                  </li>
+                  <li>
+                    <a href="/adidas" class="text-white">adidas</a>
+                  </li>
+                  <li>
+                    <a href="/vans" class="text-white">Vans</a>
+                  </li>
+                  <li>
+                    <a href="/converse" class="text-white">Converse</a>
+                  </li>
+                </ul>
+              </div>
+              <!--Grid column-->
+      
+              <!--Grid column-->
+              <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-uppercase mb-0">About</h5>
+      
+                <ul class="list-unstyled">
+                  <li>
+                    <a class="text-white">Delivery info</a>
+                  </li>
+                  <li>
+                    <a class="text-white">Careers</a>
+                  </li>
+                  <li>
+                    <a class="text-white">Corporate responsibility</a>
+                  </li>
+                  <li>
+                    <a href="/admin" class="text-white">Admin</a>
+                  </li>
+                </ul>
+              </div>
+              <!--Grid column-->
+            </div>
+            <!--Grid row-->
+          </div>
+          <!-- Grid container -->
+      
+          <!-- Copyright -->
+          <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2021 Copyright:
+            <a class="text-white" href="/home">FOOTR</a>
+          </div>
+          <!-- Copyright -->
+        </footer>
+        <!-- Footer -->
+      </section>
+
+
+      <script type="text/javascript">
+        var homedata = JSON.parse('{{ homedata | safe }}');
+        load_home_banner(homedata);
+      </script>
+  </body>
+</html>
