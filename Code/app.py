@@ -131,7 +131,7 @@ def search_products(searchquery):
     return products
 
 def edit_product(formdata):
-    # Initialise string to hold data for the query
+    # Initialise list to hold data for the query
     querydata = []
 
     # Loop through formdata
@@ -141,6 +141,7 @@ def edit_product(formdata):
             querydata.append(str(i + " = '" + formdata[i] + "'"))
 
     # Preparing SQL queries to UPDATE an existing record in the database
+    print(querydata)
     for i in range(1, len(querydata)):
         sqlstatement = "UPDATE productdata SET " + querydata[i] + " WHERE " + querydata[0] + ";"
 
@@ -392,7 +393,7 @@ def searchresults():
         products = search_products(searchquery)
 
     # return website and data files
-    return render_template('index.html', rows=products)
+    return render_template('index.html', rows=products, searchquery=searchquery)
 
 # Take parameters from GET request and save as variables
 @app.route('/<page>/sort/<sorttype>', methods =['GET'])
@@ -533,7 +534,7 @@ def admin():
     products = get_products_brand('all')
 
     # Retrieve news data from function
-    #news_data = get_news()
+    news_data = get_news()
 
     if request.method == "POST":
         # Save submitted form data into variable
@@ -556,8 +557,7 @@ def admin():
     admindatafile.close()
 
     # return website and data files
-    return render_template('admin.html', rows=products, admindata=admindata)
-    #, news_data=news_data
+    return render_template('admin.html', rows=products, admindata=admindata, news_data=news_data)
 
 
 @app.errorhandler(404)

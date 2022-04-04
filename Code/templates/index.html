@@ -23,7 +23,7 @@
   </head>
   <body>
     
-    <nav class="navbar navbar-expand-lg py-3 navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg py-2 navbar-dark bg-dark">
       <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -68,19 +68,25 @@
     
     <div class="container-fluid py-2">
       <div class="dropdown">
-        <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" "">
+          <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" "">
               <i class="bi bi-filter-left"></i> Sort by
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
               <li><a class="dropdown-item" onclick="sortlow()" >Price: lowest first</a></li>
               <li><a class="dropdown-item" onclick="sorthigh()" >Price: highest first</a></li>
             </ul>
+          </div>
         </div>
-      </div>
-      
-      <div class="container py-3">
-        <div class="row">
-          
+        
+        <div class="container py-3">
+
+          {% if searchquery is defined %}
+            <h4>Showing results for '{{searchquery}}'</h4>
+          {% endif %}
+
+
+          <div class="row">
+    
           {% for row in rows %}
           <div class="col py-2">
             
